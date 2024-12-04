@@ -71,21 +71,25 @@
               <span>{{ isDefaultAvatar ? "Add Photo" : "Change Photo" }}</span>
             </button>
           </div>
-          <div v-else class="flex gap-2">
-            <input
-              data-test="avatar-url-input"
-              v-model="avatarUrl"
-              type="text"
-              placeholder="Paste avatar URL"
-              class="flex-1 pl-4 pr-10 py-2 rounded-md border border-gray-200 focus:outline-none focus:border-gray-300 text-xs"
-            />
-            <button
-              data-test="save-avatar-button"
-              @click="handleSaveAvatar"
-              class="text-gray-500 hover:text-gray-600 border border-gray-500 rounded-md py-2 px-4 flex items-center justify-center text-xs"
+          <div v-else>
+            <div
+              class="flex flex-col xs:flex-row md:flex-col lg:flex-row gap-2"
             >
-              Save
-            </button>
+              <input
+                data-test="avatar-url-input"
+                v-model="avatarUrl"
+                type="text"
+                placeholder="Paste avatar URL"
+                class="flex-1 pl-4 pr-10 py-2 rounded-md border border-gray-200 focus:outline-none focus:border-gray-300 text-xs"
+              />
+              <button
+                data-test="save-avatar-button"
+                @click="handleSaveAvatar"
+                class="bg-emerald-600 text-white px-4 py-2 rounded-md flex items-center justify-center hover:bg-emerald-700 text-xs w-1/2 mx-auto xs:w-auto xs:mx-0 md:w-1/2 md:mx-auto lg:w-auto lg:mx-0"
+              >
+                Save
+              </button>
+            </div>
           </div>
         </div>
         <p v-if="errors.avatar" class="text-red-500 text-xs mt-1">
