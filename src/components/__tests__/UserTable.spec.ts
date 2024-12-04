@@ -66,6 +66,36 @@ describe("UserTable", () => {
     });
   };
 
+  it("nie wyświetla paginacji gdy jest tylko jedna strona", async () => {
+    mockState.displayedUsers = [
+      { id: 1, first_name: "Jan", last_name: "Kowalski", avatar: "url" },
+    ];
+    mockStore.displayedUsers = mockState.displayedUsers;
+    mockState.totalPages = 1;
+    mockStore.totalPages = 1;
+
+    const wrapper = mountComponent();
+    await flushPromises();
+
+    expect(wrapper.find('[data-test="prev-page"]').exists()).toBe(false);
+    expect(wrapper.find('[data-test="next-page"]').exists()).toBe(false);
+  });
+
+  it("wyświetla paginację gdy jest więcej niż jedna strona", async () => {
+    mockState.displayedUsers = [
+      { id: 1, first_name: "Jan", last_name: "Kowalski", avatar: "url" },
+    ];
+    mockStore.displayedUsers = mockState.displayedUsers;
+    mockState.totalPages = 2;
+    mockStore.totalPages = 2;
+
+    const wrapper = mountComponent();
+    await flushPromises();
+
+    expect(wrapper.find('[data-test="prev-page"]').exists()).toBe(true);
+    expect(wrapper.find('[data-test="next-page"]').exists()).toBe(true);
+  });
+
   it("displays list of users", async () => {
     const users = [
       {
@@ -161,19 +191,16 @@ describe("UserTable", () => {
     const wrapper = mountComponent();
     await flushPromises();
 
-    // Previous page
     await wrapper.find('[data-test="prev-page"]').trigger("click");
     await flushPromises();
     expect(mockStore.setPage).toHaveBeenLastCalledWith(1);
     mockStore.setPage.mockClear();
 
-    // Next page
     await wrapper.find('[data-test="next-page"]').trigger("click");
     await flushPromises();
     expect(mockStore.setPage).toHaveBeenLastCalledWith(3);
     mockStore.setPage.mockClear();
 
-    // Specific page
     await wrapper.find('[data-test="page-2"]').trigger("click");
     await flushPromises();
     expect(mockStore.setPage).toHaveBeenLastCalledWith(2);

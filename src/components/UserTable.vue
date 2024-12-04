@@ -105,7 +105,10 @@
       </div>
     </div>
 
-    <div v-if="userStore.displayedUsers.length" class="flex mt-6 mb-12">
+    <div
+      v-if="userStore.displayedUsers.length && userStore.totalPages > 1"
+      class="flex mt-6 mb-12 mx-6"
+    >
       <button
         data-test="prev-page"
         class="w-8 h-8 flex items-center justify-center border border-gray-200 bg-white text-emerald-600 hover:bg-gray-100 rounded-l disabled:text-gray-400 disabled:hover:bg-white"
